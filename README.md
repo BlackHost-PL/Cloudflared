@@ -51,4 +51,4 @@ The script requires the `cloudflared_token.txt` file, which contains the token f
 
 [MIT License](https://choosealicense.com/licenses/mit/)
 
-Originall repository: https://gitlab.com/tenten8401/pterodactyl-nginx
+Original repository: https://gitlab.com/tenten8401/pterodactyl-nginx
