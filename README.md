@@ -15,16 +15,21 @@ The script automatically checks if `cloudflared` is installed, downloads the lat
 
 ## Installation
 
-1. Ensure you have `curl` installed and the necessary permissions to execute files on your system.
+1. Ensure you have `git` installed and the necessary permissions to execute files on your system.
 2. Create a new Pterodactyl egg and configure it to run the following installation process.
 3. In the egg setup, make sure the script will download the repository from GitHub at server installation. You can do this by adding the following lines to your Pterodactyl egg's `install` configuration:
 
 ```bash
-# Download the latest script from GitHub
-curl -fsSL -o /home/container/cloudflared_tunnel.sh https://github.com/HHakeRR785/your-repository/raw/main/cloudflared_tunnel.sh && curl -fsSL -o /home/container/LICENSE https://github.com/HHakeRR785/your-repository/raw/main/LICENSE
+# Create necessary folders
+echo -e "[SETUP] Create folders"
+mkdir -p logs tmp
 
-# Give execute permissions to the script
-chmod +x /home/container/cloudflared_tunnel.sh
+# Clone the repository into a temporary directory and extract it
+echo "[Git] Cloning default repository 'https://github.com/BlackHost-PL/Cloudflared' into temporary directory."
+git clone https://github.com/BlackHost-PL/Cloudflared /mnt/server/gtemp > /dev/null 2>&1 && echo "[Git] Repository cloned successfully." || { echo "[Git] Error: Default repository clone failed."; exit 21; }
+cp /mnt/server/gtemp/cloudflared.sh /mnt/server || { echo "[Git] Error: Copying 'cloudflared.sh' file failed."; exit 22; }
+cp /mnt/server/gtemp/LICENSE /mnt/server || { echo "[Git] Error: Copying 'LICENSE' file failed."; exit 22; }
+chmod +x /mnt/server/cloudflared.sh
 ```
 
 4. Modify the start command in your Pterodactyl egg to automatically execute the script on server start.
@@ -32,7 +37,7 @@ chmod +x /home/container/cloudflared_tunnel.sh
 ### Requirements
 
 - Linux-based operating system (script tested on AMD64-based systems).
-- `curl` and `chmod` must be installed on your system.
+- `git` must be installed on your container.
 
 ## Configuration
 
